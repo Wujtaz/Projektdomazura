@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Add EMployee</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand px-3" href="/">Menadżer Pracowników</a>
+    <div class="navbar" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Lista Pracowników</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/dodaj">Dodaj Pracownika</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="p-3 d-flex justify-content-center">
+    <form th:action="@{/pracownik/zapisz}" th:object="${Pracownik}" method="post" onsubmit="return validateForm()">
+        <label for="imie">Imię:</label><br>
+        <input type="text" th:field="*{imie}" id="imie" name="imie" required />
+        <br />
+
+        <label for="nazwisko">Nazwisko:</label> <br>
+        <input type="text" th:field="*{nazwisko}" id="nazwisko" name="nazwisko" required />
+        <br />
+
+        <label for="stanowisko">Stanowisko:</label><br>
+        <input type="text" th:field="*{stanowisko}" id="stanowisko" name="stanowisko" required />
+        <br />
+
+        <label for="wyplata">Wypłata:</label><br>
+        <input type="number" min="0" max="100000" th:field="*{wyplata}" id="wyplata" name="wyplata" required />
+        <br />
+        <br>
+        <input class="btn btn-primary" type="submit" value="Wyślij" />
+    </form>
+
+    <script>
+    function validateForm() {
+        var imie = document.getElementById("imie").value;
+        var nazwisko = document.getElementById("nazwisko").value;
+        var stanowisko = document.getElementById("stanowisko").value;
+        var wyplata = document.getElementById("wyplata").value;
+
+        var nameRegex = /^[A-Za-z]+$/;
+        var numberRegex = /^\d+$/;
+
+        if (!imie.match(nameRegex)) {
+            alert("Imie może zawierać tylko litery alfabetu");
+            return false;
+        }
+
+        if (!nazwisko.match(nameRegex)) {
+            alert("Nazwisko może zawierać tylko litery alfabetu");
+            return false;
+        }
+
+        if (!stanowisko.match(nameRegex)) {
+            alert("Niech się pan już tak nie doszukuje :)");
+            return false;
+        }
+
+        if (!wyplata.match(numberRegex) || parseInt(wyplata) < 0) {
+            alert("Wypłata może zawierać tylko liczby naturalne");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+</div>
+
+</body>
+
+
+</html>
